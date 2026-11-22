@@ -1,0 +1,460 @@
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#123c35" />
+  <title>KALAHUNI.ID — Hunian Terawat, Hidup Lebih Nyaman</title>
+  <style>
+    :root {
+      --green: #123c35;
+      --green-light: #e8f1ed;
+      --lime: #c6e7a5;
+      --cream: #f7f7f2;
+      --text: #20302b;
+      --muted: #74817b;
+      --border: #e5e9e5;
+      --white: #fff;
+      --orange: #e99b46;
+      --red: #d75c55;
+      --shadow: 0 12px 35px rgba(28, 54, 45, .07);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--cream);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .layout { min-height: 100vh; display: grid; grid-template-columns: 248px 1fr; }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 28px 18px;
+      color: white;
+      background: var(--green);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand { display: flex; align-items: center; gap: 11px; padding: 0 10px 34px; }
+    .brand-mark {
+      display: grid; place-items: center; width: 40px; height: 40px;
+      color: var(--green); background: var(--lime); border-radius: 13px;
+      font-size: 22px; font-weight: 900;
+    }
+    .brand-name { font-size: 18px; font-weight: 850; letter-spacing: .3px; }
+    .brand-tagline { margin-top: 3px; color: #c6d6cf; font-size: 10px; }
+
+    .nav-label {
+      padding: 0 12px; margin: 0 0 10px; color: #9eb7ac;
+      font-size: 10px; font-weight: 800; letter-spacing: 1.4px;
+    }
+
+    .nav { display: grid; gap: 6px; }
+    .nav a {
+      display: flex; align-items: center; gap: 12px; padding: 12px;
+      color: #d8e3dd; text-decoration: none; border-radius: 11px; font-size: 13px;
+    }
+    .nav a:hover, .nav a.active { color: white; background: rgba(255,255,255,.12); }
+    .nav .icon { width: 20px; text-align: center; font-size: 16px; }
+    .sidebar-bottom { margin-top: auto; padding: 15px 12px 4px; color: #b7c9c1; font-size: 11px; line-height: 1.6; }
+
+    main { min-width: 0; padding: 28px clamp(18px, 4vw, 48px) 50px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 30px; }
+    .eyebrow { color: var(--muted); font-size: 12px; }
+    h1 { margin: 5px 0 0; color: var(--green); font-size: clamp(22px, 3vw, 29px); }
+    .profile { display: flex; align-items: center; gap: 10px; }
+    .avatar {
+      display: grid; place-items: center; width: 40px; height: 40px;
+      color: var(--green); background: var(--lime); border-radius: 50%; font-weight: 800;
+    }
+    .profile-name { font-size: 12px; font-weight: 750; }
+    .profile-room { margin-top: 3px; color: var(--muted); font-size: 11px; }
+
+    .welcome {
+      display: flex; justify-content: space-between; align-items: center; gap: 20px;
+      padding: 26px 30px; color: white; background: var(--green);
+      border-radius: 18px; box-shadow: var(--shadow);
+    }
+    .welcome h2 { margin: 0 0 8px; font-size: 21px; }
+    .welcome p { margin: 0; color: #cbd9d2; font-size: 13px; }
+    .welcome .welcome-icon { font-size: 46px; }
+
+    .section-heading {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin: 30px 0 14px;
+    }
+    .section-heading h2 { margin: 0; color: var(--green); font-size: 17px; }
+    .section-heading a { color: #587d66; font-size: 12px; text-decoration: none; }
+
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+    .stat, .card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 15px; box-shadow: 0 4px 16px rgba(28,54,45,.025);
+    }
+    .stat { padding: 17px; }
+    .stat-top { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; }
+    .stat-icon { font-size: 18px; }
+    .stat-value { margin-top: 10px; color: var(--green); font-size: 20px; font-weight: 800; }
+    .stat-note { margin-top: 4px; color: var(--muted); font-size: 10px; }
+
+    .content-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
+    .card { padding: 19px; }
+    .card-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 15px; }
+    .card-title h3 { margin: 0; color: var(--green); font-size: 14px; }
+    .badge { padding: 6px 9px; color: #8d5d16; background: #fff2dd; border-radius: 20px; font-size: 10px; font-weight: 750; }
+    .badge.green { color: #356847; background: #e9f4e9; }
+    .payment-amount { margin: 7px 0 3px; font-size: 24px; font-weight: 850; }
+    .muted { color: var(--muted); font-size: 11px; }
+    .progress { height: 7px; margin: 16px 0; overflow: hidden; background: #edf0ed; border-radius: 10px; }
+    .progress span { display: block; width: 68%; height: 100%; background: var(--lime); border-radius: 10px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 7px; padding: 10px 14px; color: white; background: var(--green);
+      border: 0; border-radius: 9px; font-size: 11px; font-weight: 750;
+    }
+    .button:hover { background: #20584c; }
+    .button.secondary { color: var(--green); background: var(--green-light); }
+    .button.small { padding: 8px 11px; }
+
+    .chore-row, .ticket-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 12px 0; border-top: 1px solid var(--border);
+    }
+    .chore-row:first-of-type, .ticket-row:first-of-type { border-top: 0; }
+    .row-main { display: flex; align-items: center; gap: 10px; }
+    .row-icon {
+      display: grid; place-items: center; width: 35px; height: 35px;
+      background: var(--green-light); border-radius: 10px; font-size: 16px;
+    }
+    .row-title { font-size: 12px; font-weight: 750; }
+    .row-subtitle { margin-top: 4px; color: var(--muted); font-size: 10px; }
+    .check-button {
+      width: 28px; height: 28px; color: #64826b; background: white;
+      border: 1px solid #dce5dc; border-radius: 8px; font-weight: 800;
+    }
+    .check-button.done { color: white; background: #568563; border-color: #568563; }
+    .ticket-status { padding: 6px 8px; border-radius: 15px; font-size: 9px; font-weight: 800; white-space: nowrap; }
+    .status-progress { color: #936315; background: #fff1d8; }
+    .status-done { color: #356847; background: #e9f4e9; }
+    .status-new { color: #a44c45; background: #fbe9e7; }
+
+    .report-card { margin-top: 16px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field { display: grid; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    label { color: #53645c; font-size: 10px; font-weight: 750; }
+    input, select, textarea {
+      width: 100%; padding: 10px 11px; color: var(--text);
+      background: #fbfcfa; border: 1px solid var(--border); border-radius: 9px;
+      outline: none; font-size: 11px;
+    }
+    input:focus, select:focus, textarea:focus { border-color: #82a88c; }
+    textarea { min-height: 76px; resize: vertical; }
+    .form-actions { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+    .form-hint { color: var(--muted); font-size: 10px; }
+    .toast {
+      position: fixed; right: 20px; bottom: 20px; z-index: 5;
+      padding: 12px 16px; color: white; background: var(--green);
+      border-radius: 10px; box-shadow: var(--shadow); font-size: 12px;
+      opacity: 0; transform: translateY(10px); pointer-events: none; transition: .2s;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 850px) {
+      .layout { grid-template-columns: 74px 1fr; }
+      .sidebar { padding: 22px 10px; align-items: center; }
+      .brand { padding: 0 0 30px; }
+      .brand-copy, .nav-label, .nav .nav-text, .sidebar-bottom { display: none; }
+      .nav { width: 100%; }
+      .nav a { justify-content: center; padding: 13px 8px; }
+      .nav .icon { font-size: 19px; }
+    }
+    @media (max-width: 620px) {
+      .layout { display: block; }
+      .sidebar {
+        position: fixed; z-index: 3; top: auto; bottom: 0; width: 100%; height: 64px;
+        padding: 6px 12px; background: var(--green);
+      }
+      .brand, .nav-label, .sidebar-bottom { display: none; }
+      .nav { display: flex; justify-content: space-around; }
+      .nav a { flex: 1; display: grid; justify-items: center; gap: 2px; padding: 5px 2px; font-size: 8px; }
+      .nav .nav-text { display: block; }
+      .nav .icon { font-size: 17px; }
+      main { padding: 20px 15px 85px; }
+      .topbar { margin-bottom: 20px; }
+      .welcome { padding: 21px; }
+      .welcome .welcome-icon { font-size: 34px; }
+      .stats { gap: 8px; }
+      .stat { padding: 12px 10px; }
+      .stat-value { font-size: 16px; }
+      .stat-top { font-size: 9px; }
+      .content-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .profile-name { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">K</div>
+        <div class="brand-copy">
+          <div class="brand-name">KALAHUNI.ID</div>
+          <div class="brand-tagline">Setiap Kala Terjaga, Setiap Huni Terawat.</div>
+        </div>
+      </div>
+
+      <p class="nav-label">MENU UTAMA</p>
+      <nav class="nav" aria-label="Navigasi utama">
+        <a class="active" href="#beranda"><span class="icon">⌂</span><span class="nav-text">Beranda</span></a>
+        <a href="#tagihan"><span class="icon">▣</span><span class="nav-text">Tagihan</span></a>
+        <a href="#piket"><span class="icon">✓</span><span class="nav-text">Jadwal Piket</span></a>
+        <a href="#laporan"><span class="icon">⚒</span><span class="nav-text">Laporan</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <strong>Kos Melati Residence</strong><br />
+        Hunian nyaman dimulai dari kepedulian bersama.
+      </div>
+    </aside>
+
+    <main id="beranda">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">Rabu, 19 November 2026</div>
+          <h1>Selamat pagi, Rangga 👋</h1>
+        </div>
+        <div class="profile">
+          <div class="avatar">R</div>
+          <div>
+            <div class="profile-name">Rangga Anaksaleh</div>
+            <div class="profile-room">Penghuni · Kamar 08</div>
+          </div>
+        </div>
+      </header>
+
+      <section class="welcome">
+        <div>
+          <h2>Hunian nyaman, dimulai dari hal kecil.</h2>
+          <p>Kelola tagihan, jadwal piket, dan kebutuhan kosmu di satu tempat.</p>
+        </div>
+        <div class="welcome-icon" aria-hidden="true">🏡</div>
+      </section>
+
+      <section class="stats" aria-label="Ringkasan">
+        <article class="stat">
+          <div class="stat-top"><span>Tagihan bulan ini</span><span class="stat-icon">💳</span></div>
+          <div class="stat-value" id="stat-tagihan">Belum lunas</div>
+          <div class="stat-note">Jatuh tempo 25 November</div>
+        </article>
+        <article class="stat">
+          <div class="stat-top"><span>Jadwal piket berikutnya</span><span class="stat-icon">🧹</span></div>
+          <div class="stat-value">Kamis</div>
+          <div class="stat-note">Area dapur bersama</div>
+        </article>
+        <article class="stat">
+          <div class="stat-top"><span>Laporan aktif</span><span class="stat-icon">🛠️</span></div>
+          <div class="stat-value" id="stat-laporan">1 tiket</div>
+          <div class="stat-note">Lihat pembaruan laporanmu</div>
+        </article>
+      </section>
+
+      <div class="content-grid">
+        <section id="tagihan">
+          <div class="section-heading"><h2>Tagihan & pengingat</h2><a href="#tagihan">Lihat riwayat</a></div>
+          <article class="card">
+            <div class="card-title">
+              <h3>Sewa kamar · November 2026</h3>
+              <span class="badge" id="payment-badge">Belum dibayar</span>
+            </div>
+            <div class="muted">Total tagihan</div>
+            <div class="payment-amount">Rp850.000</div>
+            <div class="muted">Batas pembayaran: 25 November 2026</div>
+            <div class="progress"><span></span></div>
+            <button class="button" id="pay-button" type="button">Tandai sudah dibayar</button>
+            <div class="form-hint" style="margin-top:10px">Demo: tombol ini hanya mengubah status di halaman.</div>
+          </article>
+        </section>
+
+        <section id="piket">
+          <div class="section-heading"><h2>Jadwal piket</h2><a href="#piket">Jadwal mingguan</a></div>
+          <article class="card">
+            <div class="card-title">
+              <h3>Tugasmu minggu ini</h3>
+              <span class="badge green">Minggu ke-3</span>
+            </div>
+            <div class="chore-row">
+              <div class="row-main">
+                <div class="row-icon">🍳</div>
+                <div><div class="row-title">Bersihkan dapur bersama</div><div class="row-subtitle">Kamis · 19 November</div></div>
+              </div>
+              <button class="check-button" type="button" aria-label="Tandai tugas selesai">✓</button>
+            </div>
+            <div class="chore-row">
+              <div class="row-main">
+                <div class="row-icon">🗑️</div>
+                <div><div class="row-title">Buang sampah</div><div class="row-subtitle">Sabtu · 21 November</div></div>
+              </div>
+              <button class="check-button" type="button" aria-label="Tandai tugas selesai">✓</button>
+            </div>
+            <div class="form-hint">Tekan tanda centang untuk menandai tugas selesai.</div>
+          </article>
+        </section>
+      </div>
+
+      <section id="laporan">
+        <div class="section-heading"><h2>Laporan & maintenance</h2><a href="#form-laporan">+ Buat laporan</a></div>
+        <article class="card">
+          <div class="card-title">
+            <h3>Status laporan fasilitas</h3>
+            <span class="muted">Pembaruan dari pengelola</span>
+          </div>
+          <div id="ticket-list">
+            <div class="ticket-row">
+              <div class="row-main">
+                <div class="row-icon">📶</div>
+                <div><div class="row-title">Wi-Fi lantai 2 kurang stabil</div><div class="row-subtitle">Dilaporkan 17 November · #KH-1024</div></div>
+              </div>
+              <span class="ticket-status status-progress">Diproses</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card report-card" id="form-laporan">
+          <div class="card-title">
+            <h3>Laporkan kerusakan fasilitas</h3>
+            <span class="muted">Laporan akan diteruskan ke pengelola</span>
+          </div>
+          <form id="report-form">
+            <div class="form-grid">
+              <div class="field">
+                <label for="facility">Fasilitas yang bermasalah</label>
+                <select id="facility" required>
+                  <option value="">Pilih fasilitas</option>
+                  <option>AC</option>
+                  <option>Keran / saluran air</option>
+                  <option>Listrik</option>
+                  <option>Wi-Fi</option>
+                  <option>Pintu / kunci</option>
+                  <option>Fasilitas lainnya</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="location">Lokasi</label>
+                <input id="location" type="text" placeholder="Contoh: Kamar 08" required />
+              </div>
+              <div class="field full">
+                <label for="description">Ceritakan masalahnya</label>
+                <textarea id="description" placeholder="Jelaskan kerusakan atau kendala yang terjadi..." required></textarea>
+              </div>
+              <div class="field full">
+                <label for="photo">Foto bukti (opsional)</label>
+                <input id="photo" type="file" accept="image/*" />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="button" type="submit">Kirim laporan</button>
+              <span class="form-hint">Jangan khawatir, laporanmu tercatat di halaman ini.</span>
+            </div>
+          </form>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    let toastTimer;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+
+    document.getElementById("pay-button").addEventListener("click", function () {
+      this.textContent = "Menunggu konfirmasi pengelola";
+      this.disabled = true;
+      this.classList.add("secondary");
+      document.getElementById("payment-badge").textContent = "Menunggu konfirmasi";
+      document.getElementById("payment-badge").classList.add("green");
+      document.getElementById("stat-tagihan").textContent = "Menunggu";
+      showToast("Status pembayaran diperbarui (demo).");
+    });
+
+    document.querySelectorAll(".check-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        button.classList.toggle("done");
+        const done = button.classList.contains("done");
+        button.setAttribute("aria-label", done ? "Batalkan tugas selesai" : "Tandai tugas selesai");
+        showToast(done ? "Piket ditandai selesai (demo)." : "Status piket dikembalikan.");
+      });
+    });
+
+    document.getElementById("report-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const facility = document.getElementById("facility").value;
+      const location = document.getElementById("location").value.trim();
+      const description = document.getElementById("description").value.trim();
+      if (!facility || !location || !description) return;
+
+      const ticket = document.createElement("div");
+      ticket.className = "ticket-row";
+
+      const main = document.createElement("div");
+      main.className = "row-main";
+
+      const icon = document.createElement("div");
+      icon.className = "row-icon";
+      icon.textContent = "🛠️";
+
+      const detail = document.createElement("div");
+      const title = document.createElement("div");
+      title.className = "row-title";
+      title.textContent = facility + " — " + location;
+
+      const subtitle = document.createElement("div");
+      subtitle.className = "row-subtitle";
+      subtitle.textContent = description + " · Baru saja · #KH-" + Math.floor(1000 + Math.random() * 9000);
+
+      detail.append(title, subtitle);
+      main.append(icon, detail);
+
+      const status = document.createElement("span");
+      status.className = "ticket-status status-new";
+      status.textContent = "Dilaporkan";
+
+      ticket.append(main, status);
+      document.getElementById("ticket-list").prepend(ticket);
+
+      const total = document.querySelectorAll("#ticket-list .ticket-row").length;
+      document.getElementById("stat-laporan").textContent = total + (total === 1 ? " tiket" : " tiket");
+      event.target.reset();
+      showToast("Laporan berhasil ditambahkan ke daftar demo.");
+    });
+
+    document.querySelectorAll(".nav a").forEach((link) => {
+      link.addEventListener("click", () => {
+        document.querySelectorAll(".nav a").forEach((item) => item.classList.remove("active"));
+        link.classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>
